@@ -40,7 +40,21 @@
 
 namespace Soflomo\BlogI18n\Entity;
 
-class ArticleTranslation extends AbstractArticleTranslation
-{
+use Soflomo\Blog\Entity\ArticleInterface;
 
+interface ArticleTranslationInterface
+{
+    public function getId();
+    public function getArticle();
+    public function setArticle(ArticleInterface $article);
+
+    public function getLocale();
+    public function setLocale($locale);
+
+    public function getTitle();
+    public function setTitle($title);
+    public function getLead();
+    public function setLead($lead);
+    public function getBody();
+    public function setBody($body);
 }

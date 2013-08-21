@@ -21,7 +21,8 @@ return array(
         'entity_resolver' => array(
             'orm_default' => array(
                 'resolvers' => array(
-                    'Soflomo\Blog\Entity\ArticleInterface' => 'Soflomo\BlogI18n\Entity\Article',
+                    'Soflomo\Blog\Entity\ArticleInterface'                => 'Soflomo\BlogI18n\Entity\Article',
+                    'Soflomo\BlogI18n\Entity\ArticleTranslationInterface' => 'Soflomo\BlogI18n\Entity\ArticleTranslation',
                 ),
             ),
         ),
