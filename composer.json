@@ -1,6 +1,6 @@
 {
     "name": "soflomo/blog-i18n",
-    "description": "I18n module module for Soflomo\Blog",
+    "description": "I18n module module for Soflomo\\Blog",
     "license": "BSD-3-Clause",
     "type": "library",
     "keywords": [
