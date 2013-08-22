@@ -150,7 +150,7 @@ class Article extends AbstractArticle
         if ($translation instanceof ArticleTranslation && $setActive) {
             $this->setActiveTranslation($translation);
         }
-        if ($translation->getLocale() !== $this->getLocale()) {
+        if ($translation instanceof ArticleTranslation && $translation->getLocale() !== $this->getLocale()) {
             $this->setLocale($translation->getLocale());
         }
         return $translation;
