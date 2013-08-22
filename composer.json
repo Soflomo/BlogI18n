@@ -1,0 +1,31 @@
+{
+    "name": "soflomo/blog-i18n",
+    "description": "I18n module module for Soflomo\Blog",
+    "license": "BSD-3-Clause",
+    "type": "library",
+    "keywords": [
+        "zf2",
+        "blog",
+        "i18n"
+    ],
+    "homepage": "https://github.com/Soflomo/BlogI18n",
+    "authors": [
+        {
+            "name": "Jurian Sluiman",
+            "email": "jurian@soflomo.com",
+            "homepage": "http://soflomo.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3.",
+        "soflomo/blog": "@dev"
+    },
+    "autoload": {
+        "psr-0": {
+            "Soflomo\\BlogI18n": "src/"
+        },
+        "classmap": [
+            "./Module.php"
+        ]
+    }
+}
