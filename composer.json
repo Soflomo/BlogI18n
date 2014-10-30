@@ -18,7 +18,8 @@
     ],
     "require": {
         "php": ">=5.3.3.",
-        "soflomo/blog": "@dev"
+        "soflomo/blog": "@dev",
+        "soflomo/common": "@dev"
     },
     "autoload": {
         "psr-0": {
