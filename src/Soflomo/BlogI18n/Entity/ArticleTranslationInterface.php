@@ -41,16 +41,10 @@
 namespace Soflomo\BlogI18n\Entity;
 
 use Soflomo\Blog\Entity\ArticleInterface;
+use Soflomo\Common\Model\TranslationInterface;
 
-interface ArticleTranslationInterface
+interface ArticleTranslationInterface extends TranslationInterface
 {
-    public function getId();
-    public function getArticle();
-    public function setArticle(ArticleInterface $article);
-
-    public function getLocale();
-    public function setLocale($locale);
-
     public function getTitle();
     public function setTitle($title);
     public function getLead();

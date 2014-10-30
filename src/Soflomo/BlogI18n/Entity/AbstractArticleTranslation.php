@@ -45,7 +45,7 @@ use Soflomo\Blog\Entity\ArticleInterface;
 abstract class AbstractArticleTranslation implements ArticleTranslationInterface
 {
     protected $id;
-    protected $article;
+    protected $object;
 
     protected $locale;
     protected $title;
@@ -63,24 +63,24 @@ abstract class AbstractArticleTranslation implements ArticleTranslationInterface
     }
 
     /**
-     * Getter for article
+     * Getter for object
      *
-     * @return ArticleInterface
+     * @return mixed
      */
-    public function getArticle()
+    public function getObject()
     {
-        return $this->article;
+        return $this->object;
     }
 
     /**
-     * Setter for article
+     * Setter for object
      *
-     * @param  ArticleInterface $article Value to set
+     * @param mixed $object Value to set
      * @return self
      */
-    public function setArticle(ArticleInterface $article)
+    public function setObject($object)
     {
-        $this->article = $article;
+        $this->object = $object;
         return $this;
     }
 

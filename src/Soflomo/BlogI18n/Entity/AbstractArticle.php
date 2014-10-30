@@ -44,128 +44,13 @@ use Locale;
 
 use Soflomo\Blog\Entity\AbstractArticle as BaseAbstractArticle;
 use Doctrine\Common\Collections\ArrayCollection;
+use Soflomo\Common\Model\TranslatableTrait;
 
 abstract class AbstractArticle extends BaseAbstractArticle
 {
-    /**
-     * List of translations for this article
-     *
-     * @var ArrayCollection
-     */
-    protected $translations;
+    use TranslatableTrait;
 
-    /**
-     * Set the active translation based on locale
-     *
-     * @var ArticleTranslation
-     */
-    protected $activeTranslation;
-
-    /**
-     * Locale currently in use
-     *
-     * @var string
-     */
-    protected $locale;
-
-    public function __construct()
-    {
-        $this->translations = new ArrayCollection;
-    }
-
-    /**
-     * Getter for translations
-     *
-     * @return ArrayCollection
-     */
-    public function getTranslations()
-    {
-        return $this->translations;
-    }
-
-    /**
-     * Setter for translations
-     *
-     * @param  ArrayCollection $translations Value to set
-     * @return self
-     */
-    public function setTranslations(ArrayCollection $translations)
-    {
-        $this->translations = $translations;
-        return $this;
-    }
-
-    /**
-     * Getter for locale
-     *
-     * @return string
-     */
-    public function getLocale()
-    {
-        if (null === $this->locale) {
-            $this->locale = $this->detectLocale();
-        }
-
-        return $this->locale;
-    }
-
-    /**
-     * Setter for locale
-     *
-     * @param  string $locale Value to set
-     * @return self
-     */
-    public function setLocale($locale)
-    {
-        $translation = $this->getActiveTranslation();
-        if ($translation instanceof ArticleTranslation
-         && $locale !== $translation->getLocale()
-        ) {
-            $this->getTranslation($locale);
-        }
-
-        $this->locale = $locale;
-        return $this;
-    }
-
-    protected function detectLocale()
-    {
-        return Locale::getDefault();
-    }
-
-    protected function getActiveTranslation()
-    {
-        if (null !== $this->activeTranslation) {
-            return $this->activeTranslation;
-        }
-
-        $locale = $this->getLocale();
-        return $this->getTranslation($locale);
-    }
-
-    protected function getTranslation($locale, $setActive = true)
-    {
-        $translation = null;
-        foreach ($this->getTranslations() as $translation) {
-            if ($locale === $translation->getLocale()) {
-                break;
-            }
-        }
-
-        if ($translation instanceof ArticleTranslation && $setActive) {
-            $this->setActiveTranslation($translation);
-        }
-        if ($translation instanceof ArticleTranslation && $translation->getLocale() !== $this->getLocale()) {
-            $this->setLocale($translation->getLocale());
-        }
-        return $translation;
-    }
-
-    protected function setActiveTranslation(ArticleTranslation $translation)
-    {
-        $this->activeTranslation = $translation;
-        return $this;
-    }
+    protected $translationClassName = 'Soflomo\BlogI18n\Entity\ArticleTranslation';
 
     /**
      * {@inheritDoc}
@@ -180,7 +65,6 @@ abstract class AbstractArticle extends BaseAbstractArticle
      */
     public function setTitle($title)
     {
-        $this->setLocale($this->detectLocale());
         return $this->proxyTranslationSet('title', $title);
     }
 
@@ -197,7 +81,6 @@ abstract class AbstractArticle extends BaseAbstractArticle
      */
     public function setLead($lead)
     {
-        $this->setLocale($this->detectLocale());
         return $this->proxyTranslationSet('lead', $lead);
     }
 
@@ -214,36 +97,6 @@ abstract class AbstractArticle extends BaseAbstractArticle
      */
     public function setBody($body)
     {
-        $this->setLocale($this->detectLocale());
         return $this->proxyTranslationSet('body', $body);
-    }
-
-    protected function proxyTranslationGet($property)
-    {
-        $translation = $this->getActiveTranslation();
-        if (null !== $translation) {
-            $method = 'get' . ucfirst($property);
-            return $translation->$method();
-        }
-    }
-
-    protected function proxyTranslationSet($property, $value)
-    {
-        $translation = $this->getActiveTranslation();
-        $locale      = $this->getLocale();
-
-        if (!$translation instanceof ArticleTranslation
-         ||  $translation->getLocale() !== $locale
-        ) {
-            $translation = new ArticleTranslation;
-            $translation->setArticle($this);
-            $translation->setLocale($this->getLocale());
-
-            $this->translations->add($translation);
-            $this->setActiveTranslation($translation);
-        }
-
-        $method = 'set' . ucfirst($property);
-        return $translation->$method($value);
     }
 }
